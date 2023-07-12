@@ -6,6 +6,8 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pages.AccountNavigationPage;
 import pages.CreateAccountPage;
+import pages.HomePage;
+import pages.JuniorDepotPage;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -21,6 +23,8 @@ public class PlaywrightRunner {
     protected static Playwright playwright;
     protected CreateAccountPage createAccountPage;
     protected AccountNavigationPage accountNavigationPage;
+    protected HomePage homePage;
+    protected JuniorDepotPage juniorDepotPage;
 
     @BeforeAll
     public static void init() {
@@ -29,7 +33,7 @@ public class PlaywrightRunner {
 
     @BeforeEach
     public void setUp() {
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
         browserContext = browser.newContext(new Browser.NewContextOptions()
                 .setPermissions(Arrays.asList("geolocation"))
 //                .setRecordVideoDir(Paths.get("videos/"))
@@ -45,6 +49,8 @@ public class PlaywrightRunner {
 
         createAccountPage = new CreateAccountPage(page);
         accountNavigationPage = new AccountNavigationPage(page);
+        homePage= new HomePage(page);
+        juniorDepotPage = new JuniorDepotPage(page);
     }
 
     @AfterEach
